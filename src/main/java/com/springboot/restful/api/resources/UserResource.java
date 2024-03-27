@@ -1,5 +1,6 @@
 package com.springboot.restful.api.resources;
 
+import com.springboot.restful.api.domain.Post;
 import com.springboot.restful.api.domain.User;
 import com.springboot.restful.api.dto.UserDTO;
 import com.springboot.restful.api.services.UserService;
@@ -52,6 +53,12 @@ public class UserResource {
         user.setId(id);
         user = userService.update(user);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> finPosts(@PathVariable String id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 
 }
