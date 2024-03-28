@@ -3,6 +3,7 @@ package com.springboot.restful.api.config;
 import com.springboot.restful.api.domain.Post;
 import com.springboot.restful.api.domain.User;
 import com.springboot.restful.api.dto.AuthorDTO;
+import com.springboot.restful.api.dto.CommentDTO;
 import com.springboot.restful.api.repository.PostRepository;
 import com.springboot.restful.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,14 @@ public class Instantiation implements CommandLineRunner {
 
         Post firstPost = new Post(null, sdf.parse("21/03/2024"), "Partiu Viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(firstUser));
         Post secondPost = new Post(null, sdf.parse("24/03/2024"), "Bom dia", "Acordei feliz hoje", new AuthorDTO(firstUser));
+
+        CommentDTO firstComment = new CommentDTO("Boa viagem mano!", sdf.parse("21/03/2024"), new AuthorDTO(secondUser));
+        CommentDTO secondComment = new CommentDTO("Aproveite", sdf.parse("21/03/2024"), new AuthorDTO(thirdUser));
+        CommentDTO thirdComment = new CommentDTO("Tenha um ótimo dia!", sdf.parse("24/03/2024"), new AuthorDTO(thirdUser));
+
+        firstPost.getComments().addAll(Arrays.asList(firstComment, secondComment));
+        secondPost.getComments().add(thirdComment);
+
         postRepository.saveAll(Arrays.asList(firstPost, secondPost));
 
         firstUser.getPosts().addAll(Arrays.asList(firstPost, secondPost));
